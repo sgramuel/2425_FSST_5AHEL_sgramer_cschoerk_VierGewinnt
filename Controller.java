@@ -46,7 +46,7 @@ public class Controller {
             char winner = model.checkWinner();
             if (winner != '.') {
                 view.displayBoard(model.getBoard());
-                view.displayMessage("Herzlichen Glückwunsch, " + players[currentPlayer] + "! Sie haben gewonnen!");
+                view.displayMessage("Herzlichen Glückwunsch, " + players[currentPlayer] + " Sie haben gewonnen!");
                 break;
             } else if (model.isBoardFull()) {
                 view.displayBoard(model.getBoard());
