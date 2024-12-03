@@ -12,6 +12,7 @@ public class View {
     private final GridPane boardGrid;
     private final Button[] columnButtons;
     private final Label messageLabel;
+    private Controller controller;
 
     public View() {
         boardGrid = new GridPane();
@@ -19,18 +20,30 @@ public class View {
         messageLabel = new Label();
     }
 
-    public void setupUI(Stage stage) {
+    // Setter für den Controller hinzufügen
+    public void setController(Controller controller) {
+        this.controller = controller;
+    }
+
+    // Setup UI und Button-Handler
+    public void setupUI(Stage stage, Controller controller) {
+        this.controller = controller; // Setze den Controller
+
         boardGrid.setHgap(5);
         boardGrid.setVgap(5);
 
         for (int i = 0; i < 7; i++) {
             columnButtons[i] = new Button("↓");
             final int col = i;
-            columnButtons[i].setOnAction(event -> onColumnButtonClick(col));
-            boardGrid.add(columnButtons[i], i, 0);  // Buttons for each column at the top
+
+            // Button-Click-Handler
+            columnButtons[i].setOnAction(event -> {
+                controller.onColumnSelected(col);  // Benachrichtige den Controller
+            });
+            boardGrid.add(columnButtons[i], i, 0);  // Buttons für jede Spalte oben
         }
 
-        // Create 6 rows (representing the board) with 7 columns
+        // Erstelle 6 Reihen (das Spielfeld) mit 7 Spalten
         for (int row = 1; row <= 6; row++) {
             for (int col = 0; col < 7; col++) {
                 Button cellButton = new Button();
@@ -53,8 +66,8 @@ public class View {
         stage.show();
     }
 
+    // Spielfeld aktualisieren
     public void updateBoard(char[][] board) {
-        // Update the grid with the current board state
         for (int row = 1; row <= 6; row++) {
             for (int col = 0; col < 7; col++) {
                 Button cellButton = (Button) getNodeFromGridPane(boardGrid, col, row);
@@ -69,10 +82,7 @@ public class View {
         }
     }
 
-    private void onColumnButtonClick(int column) {
-        // This will notify the controller that a column has been selected
-    }
-
+    // Nachricht anzeigen
     public void displayMessage(String message) {
         Platform.runLater(() -> messageLabel.setText(message));
     }
