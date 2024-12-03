@@ -3,7 +3,7 @@ package org.example.viergewinnt;
 import javafx.application.Application;
 import javafx.stage.Stage;
 
-public class HelloApplication extends Application {
+public class FXApplication extends Application {
     @Override
     public void start(Stage primaryStage) {
         Model model = new Model();
