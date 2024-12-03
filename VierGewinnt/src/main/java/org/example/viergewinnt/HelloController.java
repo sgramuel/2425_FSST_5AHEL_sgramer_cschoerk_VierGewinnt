@@ -1,3 +1,5 @@
+package org.example.viergewinnt;
+
 import javafx.application.Platform;
 
 public class Controller {
