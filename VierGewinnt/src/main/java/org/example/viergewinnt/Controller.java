@@ -91,7 +91,7 @@ public class Controller {
         }
     }
 
-    // Joker aktivieren
+    // Joker aktiviere
     private void activateJoker() {
         // Zeige dem Spieler die Joker-Optionen: Rückgängig machen, Doppelzug oder Feld ersetzen
         view.displayMessage("Du hast einen Joker! Wähle eine Aktion: Rückgängig, Doppelzug oder Feld ersetzen.");
