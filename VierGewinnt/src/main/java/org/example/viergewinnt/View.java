@@ -5,6 +5,7 @@ import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.GridPane;
 import javafx.stage.Stage;
 
@@ -32,18 +33,7 @@ public class View {
         boardGrid.setHgap(5);
         boardGrid.setVgap(5);
 
-        for (int i = 0; i < 7; i++) {
-            columnButtons[i] = new Button("↓");
-            final int col = i;
-
-            // Button-Click-Handler
-            columnButtons[i].setOnAction(event -> {
-                controller.onColumnSelected(col);  // Benachrichtige den Controller
-            });
-            boardGrid.add(columnButtons[i], i, 0);  // Buttons für jede Spalte oben
-        }
-
-        // Erstelle 6 Reihen (das Spielfeld) mit 7 Spalten
+        // Erstelle die 6 Reihen (das Spielfeld) mit 7 Spalten
         for (int row = 1; row <= 6; row++) {
             for (int col = 0; col < 7; col++) {
                 Button cellButton = new Button();
@@ -63,6 +53,10 @@ public class View {
         Scene scene = new Scene(mainLayout, 500, 600);
         stage.setTitle("Vier Gewinnt");
         stage.setScene(scene);
+
+        // KeyEvent-Handler hinzufügen
+        scene.setOnKeyPressed(this::handleKeyPress);
+
         stage.show();
     }
 
@@ -95,4 +89,34 @@ public class View {
         }
         return null;
     }
+
+    // Tastatureingabe verarbeiten
+    private void handleKeyPress(KeyEvent event) {
+            // Prüfe auf die Numpad-Tasten 1 bis 7
+            switch (event.getCode()) {
+                case NUMPAD1:
+                    controller.onColumnSelected(0);
+                    break;
+                case NUMPAD2:
+                    controller.onColumnSelected(1);
+                    break;
+                case NUMPAD3:
+                    controller.onColumnSelected(2);
+                    break;
+                case NUMPAD4:
+                    controller.onColumnSelected(3);
+                    break;
+                case NUMPAD5:
+                    controller.onColumnSelected(4);
+                    break;
+                case NUMPAD6:
+                    controller.onColumnSelected(5);
+                    break;
+                case NUMPAD7:
+                    controller.onColumnSelected(6);
+                    break;
+                default:
+                    break; // Keine Aktion für andere Tasten
+            }
+        }
 }
