@@ -12,7 +12,10 @@ public class Controller {
     private final char[] tokens = {'o', 'x'};
     private final String[] players;
     private boolean gameFinished;  // Spielstatus: Ist das Spiel beendet?
-
+    private String gameMode = "Best of 1";  // Standardwert
+    private int maxGames;  // Maximale Anzahl an Spielen (1, 3 oder 5)
+    private int player1Wins;
+    private int player2Wins;
     // Spezialfeld und Joker
     private int moveCount;        // Zähler für die Anzahl der Züge
     private boolean jokerAvailable;  // Hat der Spieler den Joker freigeschaltet?
@@ -80,15 +83,42 @@ public class Controller {
         // Überprüfe, ob es einen Gewinner gibt
         char winner = model.checkWinner();
         if (winner != '.') {
+            if (winner == 'o') {
+                player1Wins++;
+            } else {
+                player2Wins++;
+            }
             view.displayMessage("Herzlichen Glückwunsch, " + players[currentPlayer] + " Sie haben gewonnen!");
             gameFinished = true;  // Spiel ist beendet
-        } else if (model.isBoardFull()) {
-            view.displayMessage("Das Spiel endet unentschieden!");
-            gameFinished = true;  // Spiel ist beendet
-        } else {
-            currentPlayer = 1 - currentPlayer; // Wechsel zwischen 0 und 1
-            view.displayMessage(players[currentPlayer] + " (" + tokens[currentPlayer] + "), Ihre Runde!");
+
+            // Überprüfen, ob ein Spieler das Best-of-X erreicht hat
+            if ((gameMode.equals("Best of 1") && player1Wins + player2Wins == 1) ||
+                    (gameMode.equals("Best of 3") && player1Wins == 2) ||
+                    (gameMode.equals("Best of 5") && player1Wins == 3)) {
+                view.displayMessage(players[currentPlayer] + " hat das Spiel gewonnen!");
+            }
         }
+    }
+    public void setGameMode(String mode) {
+        this.gameMode = mode;
+
+        // Setze die maximale Anzahl an Spielen je nach Auswahl
+        switch (mode) {
+            case "Best of 3":
+                maxGames = 3;
+                break;
+            case "Best of 5":
+                maxGames = 5;
+                break;
+            default:
+                maxGames = 1;
+                break;
+        }
+
+        player1Wins = 0;
+        player2Wins = 0;
+        gameFinished = false;
+        view.displayMessage("Spielmodus: " + gameMode);
     }
 
     // Joker aktivieren
