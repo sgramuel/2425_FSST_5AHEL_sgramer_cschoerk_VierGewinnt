@@ -33,6 +33,17 @@ public class View {
         boardGrid.setHgap(5);
         boardGrid.setVgap(5);
 
+        for (int i = 0; i < 7; i++) {
+            Label columnLabel = new Label(String.valueOf(i + 1)); // 1 bis 7
+            columnLabel.setStyle("-fx-font-size: 14px; -fx-font-weight: bold;");
+
+            // Erstelle ein HBox, um den Label-Inhalt zu zentrieren
+            javafx.scene.layout.HBox hBox = new javafx.scene.layout.HBox(columnLabel);
+            hBox.setAlignment(Pos.CENTER);  // Zentriert den Inhalt in der HBox
+
+            boardGrid.add(hBox, i, 0);  // Platziere die HBox oben auf das Spielfeld
+        }
+
         // Erstelle die 6 Reihen (das Spielfeld) mit 7 Spalten
         for (int row = 1; row <= 6; row++) {
             for (int col = 0; col < 7; col++) {
@@ -92,31 +103,31 @@ public class View {
 
     // Tastatureingabe verarbeiten
     private void handleKeyPress(KeyEvent event) {
-            // Prüfe auf die Numpad-Tasten 1 bis 7
-            switch (event.getCode()) {
-                case NUMPAD1:
-                    controller.onColumnSelected(0);
-                    break;
-                case NUMPAD2:
-                    controller.onColumnSelected(1);
-                    break;
-                case NUMPAD3:
-                    controller.onColumnSelected(2);
-                    break;
-                case NUMPAD4:
-                    controller.onColumnSelected(3);
-                    break;
-                case NUMPAD5:
-                    controller.onColumnSelected(4);
-                    break;
-                case NUMPAD6:
-                    controller.onColumnSelected(5);
-                    break;
-                case NUMPAD7:
-                    controller.onColumnSelected(6);
-                    break;
-                default:
-                    break; // Keine Aktion für andere Tasten
-            }
+        // Prüfe auf die Zahlentasten 1 bis 7
+        switch (event.getCode()) {
+            case DIGIT1:
+                controller.onColumnSelected(0);
+                break;
+            case DIGIT2:
+                controller.onColumnSelected(1);
+                break;
+            case DIGIT3:
+                controller.onColumnSelected(2);
+                break;
+            case DIGIT4:
+                controller.onColumnSelected(3);
+                break;
+            case DIGIT5:
+                controller.onColumnSelected(4);
+                break;
+            case DIGIT6:
+                controller.onColumnSelected(5);
+                break;
+            case DIGIT7:
+                controller.onColumnSelected(6);
+                break;
+            default:
+                break; // Keine Aktion für andere Tasten
         }
+    }
 }
