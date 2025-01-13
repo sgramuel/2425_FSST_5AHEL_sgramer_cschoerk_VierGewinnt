@@ -26,6 +26,7 @@ public class Model {
         return false;
     }
 
+
     public boolean isColumnFull(int column) {
         return board[0][column] != empty;
     }

@@ -11,13 +11,11 @@ import javafx.stage.Stage;
 
 public class View {
     private final GridPane boardGrid;
-    private final Button[] columnButtons;
     private final Label messageLabel;
     private Controller controller;
 
     public View() {
         boardGrid = new GridPane();
-        columnButtons = new Button[7];
         messageLabel = new Label();
     }
 
@@ -85,6 +83,10 @@ public class View {
                 }
             }
         }
+    }
+    public void displayJokerField(int column) {
+        Button jokerCell = (Button) getNodeFromGridPane(boardGrid, column, 1);
+        jokerCell.setStyle("-fx-background-color: green;");  // Hier grün für das Joker-Feld
     }
 
     // Nachricht anzeigen
