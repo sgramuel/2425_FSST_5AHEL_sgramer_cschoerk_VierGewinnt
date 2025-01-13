@@ -54,33 +54,16 @@ public class Controller {
             return;
         }
 
-        // Wenn das Spezialfeld verfügbar ist und der Spieler darauf klickt, aktiviere den Joker
-        if (jokerAvailable && column == jokerColumn) {
-            activateJoker();
-            return;
-        }
-
         if (model.isColumnFull(column)) {
             view.displayMessage("Diese Spalte ist voll. Bitte wählen Sie eine andere.");
             return;
         }
 
-        // Token in die gewählte Spalte setzen
-        model.dropToken(column, tokens[currentPlayer]);
+        model.dropToken(column, tokens[currentPlayer]);  // Benutze den Token des aktuellen Spielers
         moveHistory.push(new int[]{column, currentPlayer});  // Speichere den Zug
         view.updateBoard(model.getBoard());
 
-        // Zähler für Züge erhöhen
-        moveCount++;
-
-        // Überprüfen, ob das Spezialfeld erscheinen soll
-        if (moveCount >= 10 && !jokerAvailable) {  // Beispiel: nach 10 Zügen erscheint das Spezialfeld
-            jokerColumn = column;  // Setze das Spezialfeld in die ausgewählte Spalte
-            jokerAvailable = true;
-            view.displayJokerField(jokerColumn);  // Joker-Feld anzeigen
-        }
-
-        // Überprüfe, ob es einen Gewinner gibt
+        // Überprüfen, ob es einen Gewinner gibt
         char winner = model.checkWinner();
         if (winner != '.') {
             if (winner == 'o') {
@@ -97,6 +80,12 @@ public class Controller {
                     (gameMode.equals("Best of 5") && player1Wins == 3)) {
                 view.displayMessage(players[currentPlayer] + " hat das Spiel gewonnen!");
             }
+        } else if (model.isBoardFull()) {
+            view.displayMessage("Das Spiel endet unentschieden!");
+            gameFinished = true;  // Spiel ist beendet
+        } else {
+            currentPlayer = 1 - currentPlayer; // Wechsel zwischen 0 und 1
+            view.displayMessage(players[currentPlayer] + " (" + tokens[currentPlayer] + "), Ihre Runde!");
         }
     }
     public void setGameMode(String mode) {

@@ -67,7 +67,6 @@ public class View {
 
         // KeyEvent-Handler hinzufügen
         scene.setOnKeyPressed(this::handleKeyPress);
-
         stage.show();
 
         gameModeComboBox = new ComboBox<>();
