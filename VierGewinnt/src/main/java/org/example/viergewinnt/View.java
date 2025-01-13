@@ -4,6 +4,7 @@ import javafx.application.Platform;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.GridPane;
@@ -13,6 +14,7 @@ public class View {
     private final GridPane boardGrid;
     private final Label messageLabel;
     private Controller controller;
+    private ComboBox<String> gameModeComboBox;
 
     public View() {
         boardGrid = new GridPane();
@@ -67,6 +69,14 @@ public class View {
         scene.setOnKeyPressed(this::handleKeyPress);
 
         stage.show();
+
+        gameModeComboBox = new ComboBox<>();
+        gameModeComboBox.getItems().addAll("Best of 1", "Best of 3", "Best of 5");
+        gameModeComboBox.setValue("Best of 1");  // Standardwert
+        gameModeComboBox.setOnAction(event -> {
+            String selectedMode = gameModeComboBox.getValue();
+            controller.setGameMode(selectedMode);  // Setze den Spielmodus im Controller
+        });
     }
 
     // Spielfeld aktualisieren
@@ -102,6 +112,7 @@ public class View {
         }
         return null;
     }
+
 
     // Tastatureingabe verarbeiten
     private void handleKeyPress(KeyEvent event) {
