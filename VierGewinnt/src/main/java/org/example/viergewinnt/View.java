@@ -127,13 +127,14 @@ public class View {
         infoAlert.setHeaderText("Spielregeln");
         infoAlert.setContentText(
                 "1. Spieler 1 (Rot) und Spieler 2 (Gelb) spielen abwechselnd.\n" +
-                "2. Wer zuerst, 4 gleiche Spielsteine in einer Reihe - Horizontal, Vertikal\n" +
-                    "oder Diagonal hat, gewinnt.\n" +
-                "3. Das Spiel endet unentschieden, wenn das Spielfeld voll ist.\n" +
-                "4. Bei plazieren eines Spielsteins auf ein Spezialfeld (Grün) erhält der\n" +
-                    "jeweilige Spieler einen von drei möglichen Joker-Zügen:.\n" +
-                        "- der Letzte Spielzug kann Rückgängig gemacht werden\n" +
-                        "- ein Spielstein kann teleportiert werden\n\n" +
+                "2. Ein Feld kann über die Zahlentasten der Tastatur oder mit der Maus gewählt werden.\n" +
+                "3. Wer zuerst, 4 gleiche Spielsteine in einer Reihe - Horizontal, Vertikal " +
+                    "oder Diagonal - hat, gewinnt.\n" +
+                "4. Das Spiel endet unentschieden, wenn das Spielfeld voll ist.\n" +
+                "5. Bei plazieren eines Spielsteins auf ein Spezialfeld (Grün) erhält der" +
+                    "jeweilige Spieler einen von drei möglichen Joker-Zügen:\n" +
+                        "   - der Letzte Spielzug kann Rückgängig gemacht werden\n" +
+                        "   - ein Spielstein kann teleportiert werden\n\n" +
                 "Viel Spaß beim Spielen!"
         );
         infoAlert.showAndWait();
