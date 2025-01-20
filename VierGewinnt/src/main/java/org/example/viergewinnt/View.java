@@ -173,6 +173,51 @@ public class View {
         return null;
     }
 
+    public void showPlayerNamePopup(Controller controller) {
+        Stage popupStage = new Stage();
+        popupStage.setTitle("Spielernamen eingeben");
+
+        // Labels und Textfelder für die Spielernamen
+        Label player1Label = new Label("Name Spieler 1:");
+        javafx.scene.control.TextField player1TextField = new javafx.scene.control.TextField("Spieler 1");
+
+        Label player2Label = new Label("Name Spieler 2:");
+        javafx.scene.control.TextField player2TextField = new javafx.scene.control.TextField("Spieler 2");
+
+        // OK-Button
+        Button okButton = new Button("Start");
+        okButton.setOnAction(event -> {
+            // Namen aus den Textfeldern holen und an den Controller übergeben
+            String player1Name = player1TextField.getText().trim();
+            String player2Name = player2TextField.getText().trim();
+
+            if (!player1Name.isEmpty() && !player2Name.isEmpty()) {
+                controller.setPlayerNames(player1Name, player2Name);
+                popupStage.close(); // Schließt das Popup
+            } else {
+                displayMessage("Bitte beide Spielernamen eingeben!");
+            }
+        });
+
+        // Layout des Popups
+        GridPane popupLayout = new GridPane();
+        popupLayout.setAlignment(Pos.CENTER);
+        popupLayout.setHgap(10);
+        popupLayout.setVgap(10);
+
+        popupLayout.add(player1Label, 0, 0);
+        popupLayout.add(player1TextField, 1, 0);
+        popupLayout.add(player2Label, 0, 1);
+        popupLayout.add(player2TextField, 1, 1);
+        popupLayout.add(okButton, 1, 2);
+
+        Scene popupScene = new Scene(popupLayout, 300, 200);
+        popupStage.setScene(popupScene);
+        popupStage.initModality(javafx.stage.Modality.APPLICATION_MODAL); // Blockiert den Hauptthread
+        popupStage.showAndWait(); // Zeigt das Popup an und wartet
+    }
+
+
 
     // Tastatureingabe verarbeiten
     private void handleKeyPress(KeyEvent event) {

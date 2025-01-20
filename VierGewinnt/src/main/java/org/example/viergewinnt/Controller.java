@@ -39,15 +39,15 @@ public class Controller {
     public void startGame() {
         Platform.runLater(() -> {
             view.displayMessage("Willkommen bei Vier Gewinnt!");
-            // Hier Namen der Spieler festlegen
-            players[0] = "Spieler 1";
-            players[1] = "Spieler 2";
-            view.displayMessage(players[currentPlayer] + " (" + tokens[currentPlayer] + "), Ihre Runde!");
+
+            // Zeige das Popup für die Namenseingabe
+            view.showPlayerNamePopup(this);
 
             // Setze die Benutzeroberfläche auf
             view.setupUI(new javafx.stage.Stage(), this);
         });
     }
+
 
     public void onColumnSelected(int column) {
         if (gameFinished) {  // Wenn das Spiel bereits beendet ist, keine weiteren Züge
@@ -85,7 +85,7 @@ public class Controller {
             gameFinished = true;  // Spiel ist beendet
         } else {
             currentPlayer = 1 - currentPlayer; // Wechsel zwischen 0 und 1
-            view.displayMessage(players[currentPlayer] + " (" + tokens[currentPlayer] + "), Ihre Runde!");
+            view.displayMessage(players[currentPlayer] + " ist am Zug!");
         }
     }
     public void setGameMode(String mode) {
@@ -109,6 +109,13 @@ public class Controller {
         gameFinished = false;
         view.displayMessage("Spielmodus: " + gameMode);
     }
+
+    public void setPlayerNames(String player1, String player2) {
+        this.players[0] = player1;
+        this.players[1] = player2;
+        view.displayMessage(players[currentPlayer] + " ist am Zug!");
+    }
+
 
     public void resetGame() {
         model.resetBoard(); // Modell zurücksetzen
@@ -140,7 +147,7 @@ public class Controller {
 
             // Wechseln zum anderen Spieler
             currentPlayer = 1 - player;
-            view.displayMessage(players[currentPlayer] + " (" + tokens[currentPlayer] + "), Ihre Runde!");
+            view.displayMessage(players[currentPlayer] + " ist am Zug!");
         }
     }
 
