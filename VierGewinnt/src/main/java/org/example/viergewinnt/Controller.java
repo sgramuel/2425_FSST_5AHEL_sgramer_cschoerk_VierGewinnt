@@ -110,6 +110,16 @@ public class Controller {
         view.displayMessage("Spielmodus: " + gameMode);
     }
 
+    public void resetGame() {
+        model.resetBoard(); // Modell zurücksetzen
+        view.updateBoard(model.getBoard()); // Ansicht aktualisieren
+        currentPlayer = 0; // Spieler zurücksetzen
+        gameFinished = false; // Spielstatus zurücksetzen
+        moveHistory.clear(); // Zug-Historie löschen
+        view.displayMessage("Das Spiel wurde zurückgesetzt. " + players[currentPlayer] + " beginnt!");
+    }
+
+
     // Joker aktiviere
     private void activateJoker() {
         // Zeige dem Spieler die Joker-Optionen: Rückgängig machen, Doppelzug oder Feld ersetzen

@@ -82,12 +82,23 @@ public class View {
         topBar.add(infoButton, 1, 0);      // Infobutton rechts
         topBar.setAlignment(Pos.TOP_RIGHT);
 
+        // Refresh-Button erstellen
+        Button refreshButton = new Button("Refresh");
+        refreshButton.setStyle("-fx-font-size: 14px; -fx-font-weight: bold;");
+        refreshButton.setOnAction(event -> controller.resetGame());
+
+        // Unteres Layout für Refresh-Button
+        GridPane bottomBar = new GridPane();
+        bottomBar.add(refreshButton, 0, 0); // Refresh-Button zur unteren Leiste hinzufügen
+        bottomBar.setAlignment(Pos.CENTER); // Zentriere den Button
+
         // Hauptlayout
         GridPane mainLayout = new GridPane();
         mainLayout.setAlignment(Pos.CENTER);
         mainLayout.add(topBar, 0, 0);         // Oberes Layout hinzufügen
         mainLayout.add(boardGrid, 0, 1);      // Spielfeld darunter
         mainLayout.add(messageLabel, 0, 2);   // Nachrichtenfeld darunter
+        mainLayout.add(bottomBar, 0, 3);      // Unteres Layout mit Refresh-Button hinzufügen
 
         Scene scene = new Scene(mainLayout, 500, 600);
         stage.setTitle("Vier Gewinnt");
@@ -97,6 +108,7 @@ public class View {
         scene.setOnKeyPressed(this::handleKeyPress);
         stage.show();
     }
+
 
 
     private void showInfoPopup() {
@@ -116,9 +128,6 @@ public class View {
         );
         infoAlert.showAndWait();
     }
-
-
-
 
     // Spielfeld aktualisieren
     public void updateBoard(char[][] board) {

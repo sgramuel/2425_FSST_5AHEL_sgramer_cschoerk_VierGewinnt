@@ -54,6 +54,15 @@ public class Model {
         return empty;
     }
 
+    public void resetBoard() {
+        for (int i = 0; i < rows; i++) {
+            for (int j = 0; j < columns; j++) {
+                board[i][j] = empty; // Spielfeld leeren
+            }
+        }
+    }
+
+
     private boolean checkDirection(int row, int col, int rowStep, int colStep, char token) {
         int count = 0;
         for (int i = 0; i < 4; i++) {
