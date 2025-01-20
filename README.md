@@ -21,4 +21,6 @@ Besondere Felder (Zweiter Zug erlaubt, Teleportation,...)
 - Einstellungsmöglichkeiten für Spieler (Name, Farbe, o.ä.) wären gut
 - In den .md-Dateien die Prompts für Chat-GPT auflisten
 - In dieser Datei mit [name-datum] dokumentieren, wer welche Teilaufgabe fertiggestellt hat
-- 
+
+### Anmerkungen Wittner 20.1.2025
+- Anzeigen der gewinnenden Steine
