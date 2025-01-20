@@ -46,6 +46,10 @@ public class View {
             javafx.scene.layout.HBox hBox = new javafx.scene.layout.HBox(columnLabel);
             hBox.setAlignment(Pos.CENTER); // Zentriert den Inhalt in der HBox
 
+            // MouseEvent-Handler für Spaltenauswahl
+            int columnIndex = i; // Index der Spalte speichern
+            hBox.setOnMouseClicked(event -> controller.onColumnSelected(columnIndex));
+
             boardGrid.add(hBox, i, 0); // Platziere die HBox oben auf das Spielfeld
         }
 
@@ -54,6 +58,11 @@ public class View {
             for (int col = 0; col < 7; col++) {
                 Button cellButton = new Button();
                 cellButton.setPrefSize(60, 60);
+
+                // MouseEvent-Handler für Zellenklicks
+                int columnIndex = col; // Index der Spalte speichern
+                cellButton.setOnMouseClicked(event -> controller.onColumnSelected(columnIndex));
+
                 boardGrid.add(cellButton, col, row);
             }
         }
@@ -108,6 +117,7 @@ public class View {
         scene.setOnKeyPressed(this::handleKeyPress);
         stage.show();
     }
+
 
 
 
