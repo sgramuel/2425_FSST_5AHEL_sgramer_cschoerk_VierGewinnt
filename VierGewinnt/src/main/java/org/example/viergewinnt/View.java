@@ -9,6 +9,10 @@ import javafx.scene.control.Label;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.GridPane;
 import javafx.stage.Stage;
+import javafx.scene.control.Alert;
+import javafx.scene.control.Alert.AlertType;
+import javafx.scene.control.ButtonType;
+
 
 public class View {
     private final GridPane boardGrid;
@@ -33,18 +37,19 @@ public class View {
         boardGrid.setHgap(5);
         boardGrid.setVgap(5);
 
+        // Spaltenbeschriftungen hinzufügen
         for (int i = 0; i < 7; i++) {
             Label columnLabel = new Label(String.valueOf(i + 1)); // 1 bis 7
             columnLabel.setStyle("-fx-font-size: 14px; -fx-font-weight: bold;");
 
             // Erstelle ein HBox, um den Label-Inhalt zu zentrieren
             javafx.scene.layout.HBox hBox = new javafx.scene.layout.HBox(columnLabel);
-            hBox.setAlignment(Pos.CENTER);  // Zentriert den Inhalt in der HBox
+            hBox.setAlignment(Pos.CENTER); // Zentriert den Inhalt in der HBox
 
-            boardGrid.add(hBox, i, 0);  // Platziere die HBox oben auf das Spielfeld
+            boardGrid.add(hBox, i, 0); // Platziere die HBox oben auf das Spielfeld
         }
 
-        // Erstelle die 6 Reihen (das Spielfeld) mit 7 Spalten
+        // Spielfeld erstellen (6 Reihen x 7 Spalten)
         for (int row = 1; row <= 6; row++) {
             for (int col = 0; col < 7; col++) {
                 Button cellButton = new Button();
@@ -56,10 +61,33 @@ public class View {
         messageLabel.setAlignment(Pos.CENTER);
         messageLabel.setStyle("-fx-font-size: 16px; -fx-font-weight: bold;");
 
+        // Infobutton erstellen
+        Button infoButton = new Button("Info");
+        infoButton.setStyle("-fx-font-size: 14px; -fx-font-weight: bold;");
+        infoButton.setOnAction(event -> showInfoPopup());
+
+        // Spielmodus-ComboBox erstellen
+        gameModeComboBox = new ComboBox<>();
+        gameModeComboBox.getItems().addAll("Best of 1", "Best of 3", "Best of 5");
+        gameModeComboBox.setValue("Best of 1"); // Standardwert
+        gameModeComboBox.setOnAction(event -> {
+            String selectedMode = gameModeComboBox.getValue();
+            controller.setGameMode(selectedMode); // Setze den Spielmodus im Controller
+        });
+
+        // Oberes Layout für InfoButton und ComboBox
+        GridPane topBar = new GridPane();
+        topBar.setHgap(10);
+        topBar.add(gameModeComboBox, 0, 0); // ComboBox links
+        topBar.add(infoButton, 1, 0);      // Infobutton rechts
+        topBar.setAlignment(Pos.TOP_RIGHT);
+
+        // Hauptlayout
         GridPane mainLayout = new GridPane();
         mainLayout.setAlignment(Pos.CENTER);
-        mainLayout.add(boardGrid, 0, 0);
-        mainLayout.add(messageLabel, 0, 1);
+        mainLayout.add(topBar, 0, 0);         // Oberes Layout hinzufügen
+        mainLayout.add(boardGrid, 0, 1);      // Spielfeld darunter
+        mainLayout.add(messageLabel, 0, 2);   // Nachrichtenfeld darunter
 
         Scene scene = new Scene(mainLayout, 500, 600);
         stage.setTitle("Vier Gewinnt");
@@ -68,15 +96,29 @@ public class View {
         // KeyEvent-Handler hinzufügen
         scene.setOnKeyPressed(this::handleKeyPress);
         stage.show();
-
-        gameModeComboBox = new ComboBox<>();
-        gameModeComboBox.getItems().addAll("Best of 1", "Best of 3", "Best of 5");
-        gameModeComboBox.setValue("Best of 1");  // Standardwert
-        gameModeComboBox.setOnAction(event -> {
-            String selectedMode = gameModeComboBox.getValue();
-            controller.setGameMode(selectedMode);  // Setze den Spielmodus im Controller
-        });
     }
+
+
+    private void showInfoPopup() {
+        Alert infoAlert = new Alert(Alert.AlertType.INFORMATION);
+        infoAlert.setTitle("Vier Gewinnt - Spielregeln");
+        infoAlert.setHeaderText("Spielregeln");
+        infoAlert.setContentText(
+                "1. Spieler 1 (Rot) und Spieler 2 (Gelb) spielen abwechselnd.\n" +
+                "2. Wer zuerst, 4 gleiche Spielsteine in einer Reihe - Horizontal, Vertikal\n" +
+                    "oder Diagonal hat, gewinnt.\n" +
+                "3. Das Spiel endet unentschieden, wenn das Spielfeld voll ist.\n" +
+                "4. Bei plazieren eines Spielsteins auf ein Spezialfeld (Grün) erhält der\n" +
+                    "jeweilige Spieler einen von drei möglichen Joker-Zügen:.\n" +
+                        "- der Letzte Spielzug kann Rückgängig gemacht werden\n" +
+                        "- ein Spielstein kann teleportiert werden\n\n" +
+                "Viel Spaß beim Spielen!"
+        );
+        infoAlert.showAndWait();
+    }
+
+
+
 
     // Spielfeld aktualisieren
     public void updateBoard(char[][] board) {

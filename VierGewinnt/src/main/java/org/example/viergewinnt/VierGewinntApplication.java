@@ -2,12 +2,9 @@ package org.example.viergewinnt;
 
 import javafx.application.Application;
 import javafx.stage.Stage;
-import org.example.viergewinnt.Controller;
-import org.example.viergewinnt.Model;
-import org.example.viergewinnt.View;
 
 
-public class FXApplication extends Application {
+public class VierGewinntApplication extends Application {
     public static void main(String[] args) {
         launch(args);
     }
